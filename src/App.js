@@ -3,12 +3,13 @@ import './App.css';
 import Video from './Components/Video';
 import "bootstrap/dist/css/bootstrap.min.css"
 import videosDB from "./data/Data"
-import { useMemo, useReducer, useState} from 'react';
+import { useContext, useMemo, useReducer, useState} from 'react';
 import AddVideo from './Components/AddVideo';
 import VideoList from './Components/VideoList';
 import VideoContext from './Context/VideoContext';
 import VideoDispatchContext from './Context/VideoDispatchContext';
 import Counter from './Components/Counter';
+import ThemeContext from './Context/ThemeContext';
 
 
 
@@ -43,10 +44,14 @@ function videoReducer(videos, action) {
 
 function App() {
   const [videos, Dispatch] = useReducer(videoReducer, videosDB)
+  const theme=useContext(ThemeContext)
+  const [mode,setMode]=useState(theme)
 
   // const [videos, setVideos] = useState(videosDB)
   const [editable, setEditable] = useState(null)
   console.log("render app js file")
+
+  
 
   const addVideos = (video) => {
 
@@ -91,14 +96,23 @@ function App() {
 
 // const fibMemoised=useMemo(()=>fib(40),[40])
 
+const handleMode=()=>{
+setMode(!mode)
+}
+
+console.log(mode)
+
+
 
   return (
     <VideoContext.Provider value={videos}>
       <VideoDispatchContext.Provider value={Dispatch}>
-        <div>
+<ThemeContext.Provider value={{mode,setMode}}>
+        <div className={mode?"light":"dark"}>
+          
           {/* <h1>{fibMemoised}</h1> */}
-          <div >
-
+          <div  className=' align-items-center justify-content-center'>
+          <button className=' btn-dark btn pl-4' type='button' onClick={handleMode}>change mode</button>
             <AddVideo editable={editable} />
             <VideoList editVideo={editVideo}></VideoList>
 
@@ -106,6 +120,7 @@ function App() {
           </div>
           {/* <Counter/> */}
         </div>
+        </ThemeContext.Provider>
       </VideoDispatchContext.Provider>
     </VideoContext.Provider>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./AddVideo.css"
-
+import { useContext } from 'react'
+import ThemeContext from '../Context/ThemeContext'
 import useDispatch from '../Hooks/VideoDispatch'
 
 let initiale = {
@@ -16,6 +17,7 @@ const AddVideo = ({ editable, updateVideo }) => {
     const [video, setVideo] = useState(initiale)
     const Dispatch = useDispatch()
 console.log("render Addvideo js file")
+const {mode}=useContext(ThemeContext)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,7 +51,7 @@ console.log("render Addvideo js file")
         <form className='p-4 d-block w-25'>
             <input type="text" className='margin-set' placeholder='title' name="title" onChange={handleChange} value={video.title}></input>
             <input type="text" className='margin-set' placeholder='views' name="views" onChange={handleChange} value={video.views}></input>
-            <button className='btn btn-dark margin-set'
+            <button  className={mode?'btn  btn-dark  margin-set':'btn btn-light  margin-set'}
 
                 onClick={handleSubmit}
 

@@ -5,7 +5,8 @@ import PlayButton from './PlayButton'
 import { useContext } from 'react'
 import useDispatch from '../Hooks/VideoDispatch'
 
-const Video = ({title,time,views,channel="Coder Dost" ,verified,id,editVideo}) => {
+
+const Video = ({title,time,views,channel="Learn Code" ,verified,id,editVideo}) => {
 
   const Dispatch=useDispatch()
 
